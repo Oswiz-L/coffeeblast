@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoffeeBlast — Puerto Vallarta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green:      #72C11A;
+      --green-dark: #79c522;
+      --green-glow: rgba(114,193,26,0.22);
+      --green-soft: rgba(114,193,26,0.09);
+      --bg:         #2a3322;
+      --bg-mid:     #151f0b;
+      --bg-card:    #1b260d;
+      --bg-card2:   #1e2a0f;
+      --white:      #ffffff;
+      --off-white:  #eef5e0;
+      --muted:      rgba(238,245,224,0.55);
+      --border:     rgba(114,193,26,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--off-white);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 3rem;
+      background: linear-gradient(to bottom, rgba(17,26,9,0.98), transparent);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(17,26,9,0.99);
+      box-shadow: 0 1px 0 var(--border), 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .brand-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo-icon  { width: 32px; height: 36px; }
+    .logo-text  {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+      letter-spacing: 0.08em; color: var(--white); line-height: 1;
+    }
+    .logo-text span { color: var(--green); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(238,245,224,0.7); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      padding: 0.5rem 1.4rem !important;
+      background: var(--green) !important;
+      color: var(--bg) !important;
+      border-radius: 3px; font-weight: 700 !important;
+      opacity: 1 !important;
+    }
+    .nav-cta:hover { background: var(--green-dark) !important; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 0 2rem; position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at 55% 35%, #1d330a 0%, #111a09 55%, #0a1205 100%);
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(114,193,26,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(114,193,26,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 640px; height: 640px;
+      background: radial-gradient(circle, rgba(114,193,26,0.1) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -55%);
+      pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { transform: translate(-50%,-55%) scale(1);   opacity:0.8; }
+      50%      { transform: translate(-50%,-55%) scale(1.12); opacity:1; }
+    }
+    .hero-eyebrow {
+      position: relative; z-index:1;
+      font-size: 0.75rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.4rem;
+      animation: fadeUp 0.8s 0.1s both;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 28px; height: 1px; background: var(--green); opacity: 0.5;
+    }
+    .hero-logo-big {
+      position: relative; z-index:1;
+      animation: fadeUp 0.9s 0.2s both; margin-bottom: 0.6rem;
+    }
+    .hero-title {
+      position: relative; z-index:1;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 13vw, 10rem);
+      line-height: 0.88; letter-spacing: 0.04em; color: var(--white);
+      animation: fadeUp 0.9s 0.3s both;
+    }
+    .hero-title .blast { color: var(--green); display: block; }
+    .hero-sub {
+      position: relative; z-index:1;
+      margin-top: 1.6rem;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.15rem; color: var(--muted);
+      animation: fadeUp 0.9s 0.4s both;
+    }
+    .hero-cta {
+      position: relative; z-index:1;
+      margin-top: 2.8rem; display: inline-flex; gap: 1rem;
+      animation: fadeUp 0.9s 0.5s both;
+    }
+    .btn {
+      display: inline-block; padding: 0.85rem 2.2rem; border-radius: 3px;
+      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 600; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-primary {
+      background: var(--green); color: var(--bg);
+      box-shadow: 0 4px 24px rgba(114,193,26,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px); background: #82d620;
+      box-shadow: 0 8px 36px rgba(114,193,26,0.5);
+    }
+    .btn-outline {
+      border: 1px solid rgba(238,245,224,0.3); color: var(--off-white);
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index:1;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      animation: fadeUp 1s 1s both;
+    }
+    .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(26px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green), transparent);
+      opacity: 0.3;
+    }
+
+    /* ─── SHARED ─── */
+    .section-label {
+      display: block; font-size: 0.72rem; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 0.9rem;
+    }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem); color: var(--white); line-height: 1;
+    }
+    .section-header p {
+      margin-top: 1rem; max-width: 480px; margin-inline: auto;
+      font-size: 0.95rem; line-height: 1.8; color: var(--muted);
+    }
+
+    /* ─── NOSOTROS ─── */
+    #nosotros {
+      padding: 8rem 3rem; background: var(--bg-mid);
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .cup-frame {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .cup-frame::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(114,193,26,0.07) 0%, transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(114,193,26,0.04) 0%, transparent 50%);
+    }
+    .cup-frame svg { width: 200px; position: relative; z-index: 1; }
+    .badge-chip {
+      position: absolute; bottom: -16px; right: -16px;
+      background: var(--green); color: var(--bg);
+      border-radius: 4px; padding: 0.9rem 1.1rem; text-align: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; line-height: 1.1;
+      box-shadow: 0 0 0 4px var(--bg-mid), 0 8px 24px rgba(114,193,26,0.4);
+    }
+    .badge-chip small { display:block; font-family:'Outfit',sans-serif; font-size:0.58rem; letter-spacing:0.1em; font-weight:600; }
+    .about-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 4vw, 3.8rem); line-height: 1; color: var(--white); margin-bottom: 1.6rem;
+    }
+    .about-text p { font-size: 0.97rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.2rem; }
+    .stats-row {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--green); line-height:1; }
+    .stat-label { font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-top:0.3rem; }
+
+    /* ─── MENÚ ─── */
+    #menu { padding: 8rem 3rem; background: var(--bg); }
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 0.5rem;
+      margin-bottom: 3rem; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.55rem 1.5rem; border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      font-family: 'Outfit',sans-serif; font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--green); color: var(--bg); border-color: var(--green); font-weight: 700;
+    }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.4rem; max-width: 1100px; margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden; text-align: left;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(114,193,26,0.4);
+      border-color: rgba(114,193,26,0.4);
+    }
+    .menu-card-img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+    }
+    .menu-card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, var(--bg-card) 100%);
+    }
+    .cat-hot  { background: linear-gradient(135deg,#1e2f0a,#111a09); }
+    .cat-cold { background: linear-gradient(135deg,#0a1a1a,#080d12); }
+    .cat-frap { background: linear-gradient(135deg,#1a270a,#101807); }
+    .cat-food { background: linear-gradient(135deg,#1f200a,#131407); }
+
+    .menu-card-body { padding: 1.2rem 1.4rem 1.6rem; }
+    .menu-card-name { font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; }
+    .menu-card-desc { font-size: 0.82rem; line-height: 1.65; color: var(--muted); margin-bottom: 1rem; }
+    .menu-card-price { font-family:'Bebas Neue',sans-serif; font-size:1.35rem; color:var(--green); letter-spacing:0.04em; }
+    .tag {
+      display: inline-block; padding: 0.18rem 0.55rem;
+      background: rgba(114,193,26,0.13); color: var(--green);
+      font-family: 'Outfit',sans-serif; font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; border-radius: 2px; margin-left: 0.4rem; vertical-align: middle;
+    }
+
+    /* ─── FEATURES ─── */
+    #ambiente { padding: 7rem 3rem; background: var(--bg-mid); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .feat-card {
+      background: var(--bg-card2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 1.1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feat-card:hover { border-color: rgba(114,193,26,0.4); transform: translateY(-4px); }
+    .feat-icon {
+      width: 52px; height: 52px; background: var(--green-soft); border: 1px solid var(--border);
+      border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .feat-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--white); }
+    .feat-card p  { font-size: 0.88rem; line-height: 1.75; color: var(--muted); }
+
+    /* ─── UBICACIÓN ─── */
+    #ubicacion { padding: 8rem 3rem; background: var(--bg); }
+    .location-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .location-map {
+      border-radius: 6px; overflow: hidden; border: 1px solid var(--border);
+      box-shadow: 0 0 40px rgba(114,193,26,0.06);
+    }
+    .location-map iframe { width: 100%; height: 400px; display: block; filter: grayscale(50%) hue-rotate(60deg); }
+    .location-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem; color: var(--white); line-height: 1; margin-bottom: 2.4rem;
+    }
+    .info-block { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.8rem; }
+    .info-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: var(--green-soft); border: 1px solid var(--border); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .info-block h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 0.35rem; font-weight: 600; }
+    .info-block p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+    .hours-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1.2rem; font-size: 0.88rem; color: var(--muted); }
+    .hours-grid .day { font-weight: 500; color: var(--off-white); }
+    .hours-grid .open { color: var(--green); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0a1205; border-top: 1px solid var(--border);
+      padding: 3rem 3rem 2rem; text-align: center;
+    }
+    .footer-brand { display: flex; justify-content: center; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+    .footer-brand-text { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.1em; color:var(--white); }
+    .footer-brand-text span { color: var(--green); }
+    .footer-tagline { font-family:'Playfair Display',serif; font-style:italic; color:rgba(238,245,224,0.3); font-size:0.9rem; margin-bottom:2rem; }
+    .social-links { display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 2rem; }
+    .social-btn {
+      width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 0.78rem; font-weight: 700; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .social-btn:hover { background: var(--green); border-color: var(--green); color: var(--bg); transform: translateY(-2px); }
+    .footer-copy { font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(238,245,224,0.2); text-transform: uppercase; }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #nosotros { grid-template-columns:1fr; gap:3rem; padding:5rem 1.5rem; }
+      .location-inner { grid-template-columns:1fr; gap:3rem; }
+      .features-grid { grid-template-columns:1fr; }
+      nav { padding:1rem 1.5rem; }
+      #menu, #ubicacion, #ambiente { padding:5rem 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a class="brand-logo" href="#">
+    <svg class="logo-icon" viewBox="0 0 100 110" fill="none">
+      <circle cx="50" cy="44" r="38" fill="#72C11A"/>
+      <polygon points="38,76 50,100 62,76" fill="#72C11A"/>
+      <circle cx="50" cy="44" r="24" fill="#111a09"/>
+    </svg>
+    <span class="logo-text">COFFEE<span>BLAST</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#ambiente">¿Por qué Nosotros?</a></li>
+    <li><a href="#ubicacion" class="nav-cta">Visítanos</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">Puerto Vallarta · México</p>
+
+  <div class="hero-logo-big">
+    <svg width="110" height="122" viewBox="0 0 100 110" fill="none">
+      <circle cx="50" cy="44" r="38" fill="rgba(114,193,26,0.12)"/>
+      <circle cx="50" cy="44" r="38" fill="none" stroke="#72C11A" stroke-width="3"/>
+      <polygon points="38,76 50,100 62,76" fill="none" stroke="#72C11A" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="50" cy="44" r="22" fill="none" stroke="#72C11A" stroke-width="3"/>
+      <circle cx="50" cy="44" r="8" fill="#72C11A" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title">COFFEE<span class="blast">BLAST</span></h1>
+  <p class="hero-sub">Donde cada sorbo es una explosión de sabor</p>
+  <div class="hero-cta">
+    <a href="#menu" class="btn btn-primary">Ver Menú</a>
+    <a href="#ubicacion" class="btn btn-outline">Cómo Llegar</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── NOSOTROS ─── -->
+<section style="background:var(--bg-mid)">
+<div id="nosotros">
+
+  <div class="reveal" style="position:relative">
+    <div class="cup-frame">
+      <svg width="200" height="220" viewBox="0 0 200 220" fill="none">
+        <!-- Steam -->
+        <path d="M68 38 Q77 22 68 8" stroke="#72C11A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0,5;0,-7;0,5" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M98 28 Q108 10 98 -2" stroke="#72C11A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.55">
+          <animate attributeName="opacity" values="0.55;0.15;0.55" dur="2.6s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0,4;0,-8;0,4" dur="2.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M130 36 Q139 20 130 8" stroke="#72C11A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.9s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0,5;0,-6;0,5" dur="1.9s" repeatCount="indefinite"/>
+        </path>
+        <!-- Cup body -->
+        <path d="M30 55 L48 185 H152 L170 55 Z" fill="#1b260d"/>
+        <path d="M30 55 L48 185 H152 L170 55 Z" fill="url(#gCup)" opacity="0.5"/>
+        <!-- Rim -->
+        <ellipse cx="100" cy="55" rx="70" ry="13" fill="#1e2a0f"/>
+        <ellipse cx="100" cy="53" rx="70" ry="13" fill="#243312"/>
+        <!-- Coffee surface -->
+        <ellipse cx="100" cy="52" rx="54" ry="8" fill="#162009"/>
+        <!-- Logo art on surface -->
+        <circle cx="100" cy="52" r="17" fill="none" stroke="#72C11A" stroke-width="1.5" opacity="0.45"/>
+        <circle cx="100" cy="52" r="7"  fill="#72C11A" opacity="0.35"/>
+        <polygon points="94,63 100,73 106,63" fill="#72C11A" opacity="0.35"/>
+        <!-- Saucer -->
+        <ellipse cx="100" cy="185" rx="82" ry="13" fill="#1e2a0f"/>
+        <ellipse cx="100" cy="183" rx="74" ry="10" fill="#243312"/>
+        <!-- Handle -->
+        <path d="M170 88 Q210 112 205 152 Q200 178 170 166" stroke="#1e2a0f" stroke-width="16" fill="none" stroke-linecap="round"/>
+        <path d="M170 88 Q207 114 202 152 Q197 176 170 166" stroke="#243312" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <!-- Brand text on cup -->
+        <text x="100" y="130" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#72C11A" opacity="0.18" letter-spacing="3">COFFEE</text>
+        <text x="100" y="155" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#72C11A" opacity="0.18" letter-spacing="3">BLAST</text>
+        <defs>
+          <linearGradient id="gCup" x1="30" y1="55" x2="170" y2="185" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#72C11A" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#72C11A" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="badge-chip">
+        <small>Abierto</small>
+        TODOS
+        <small>los días</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-text reveal" style="transition-delay:0.15s">
+    <span class="section-label">Nuestra Historia</span>
+    <h2>Una Explosión de Sabor en Puerto Vallarta</h2>
+    <p>CoffeeBlast nació con una misión simple: ofrecer bebidas de café de calidad extraordinaria en un espacio lleno de energía y buena vibra en el corazón de Puerto Vallarta.</p>
+    <p>Ubicados sobre la Carretera Tepic–Puerto Vallarta en Las Juntas, somos el punto perfecto para detenerte y recargar energías con nuestras bebidas calientes, frías y frappés artesanales.</p>
+    <div class="stats-row">
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Bebidas en Menú</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Café de Calidad</div>
+      </div>
+      <div>
+        <div class="stat-num">7 días</div>
+        <div class="stat-label">A la Semana</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── MENÚ ─── -->
+<section id="menu">
+  <div class="section-header reveal">
+    <span class="section-label">Lo que Ofrecemos</span>
+    <h2>Nuestro Menú</h2>
+    <p>Desde clásicos espressos hasta frappés creativos. Siempre elaborados al momento para ti.</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="filterMenu('todos',this)">Todos</button>
+    <button class="tab-btn" onclick="filterMenu('caliente',this)">Calientes ☕</button>
+    <button class="tab-btn" onclick="filterMenu('frio',this)">Fríos 🧊</button>
+    <button class="tab-btn" onclick="filterMenu('frap',this)">Frappés 🥤</button>
+    <button class="tab-btn" onclick="filterMenu('food',this)">Snacks 🥐</button>
+  </div>
+  <div class="menu-grid" id="menuGrid">
+    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot">☕</div><div class="menu-card-body"><div class="menu-card-name">Americano BLAST</div><div class="menu-card-desc">Doble shot de espresso con agua caliente. Intenso y lleno de energía.</div><div class="menu-card-price">$45 MXN</div></div></div>
+    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot">🍫</div><div class="menu-card-body"><div class="menu-card-name">Capuchino Clásico</div><div class="menu-card-desc">Espresso, leche vaporizada y una capa perfecta de espuma cremosa.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot">🌿</div><div class="menu-card-body"><div class="menu-card-name">Latte de Vainilla</div><div class="menu-card-desc">Espresso suave con leche de vainilla artesanal. Dulce y reconfortante.</div><div class="menu-card-price">$60 MXN <span class="tag">⭐ Popular</span></div></div></div>
+    <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">🧊</div><div class="menu-card-body"><div class="menu-card-name">Cold Brew</div><div class="menu-card-desc">Café infusionado en frío por 18 horas. Suave, concentrado y refrescante.</div><div class="menu-card-price">$65 MXN <span class="tag">⭐ Popular</span></div></div></div>
+    <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">☕</div><div class="menu-card-body"><div class="menu-card-name">Iced Latte Caramelo</div><div class="menu-card-desc">Espresso frío con leche y salsa de caramelo artesanal sobre hielo.</div><div class="menu-card-price">$65 MXN</div></div></div>
+    <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">🥛</div><div class="menu-card-body"><div class="menu-card-name">Iced Matcha Latte</div><div class="menu-card-desc">Matcha ceremonial con leche de avena y hielo fresco.</div><div class="menu-card-price">$70 MXN</div></div></div>
+    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🥤</div><div class="menu-card-body"><div class="menu-card-name">Frappé BLAST Original</div><div class="menu-card-desc">Nuestro frappé signature: café, chocolate, crema y un blast de caramelo.</div><div class="menu-card-price">$75 MXN <span class="tag">🔥 Firma</span></div></div></div>
+    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🍓</div><div class="menu-card-body"><div class="menu-card-name">Frappé de Fresa</div><div class="menu-card-desc">Fresas frescas, crema y toque de vainilla. Intensamente frutal.</div><div class="menu-card-price">$70 MXN</div></div></div>
+    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🍪</div><div class="menu-card-body"><div class="menu-card-name">Frappé Cookies & Cream</div><div class="menu-card-desc">Crema, galleta Oreo triturada y café. El favorito de todos.</div><div class="menu-card-price">$75 MXN <span class="tag">⭐ Popular</span></div></div></div>
+    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón y Queso</div><div class="menu-card-desc">Croissant horneado al momento, relleno de jamón y queso gratinado.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🧁</div><div class="menu-card-body"><div class="menu-card-name">Muffin del Día</div><div class="menu-card-desc">Horneado fresco cada mañana. Sabores: arándano, chocolate o limón.</div><div class="menu-card-price">$40 MXN</div></div></div>
+    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🥪</div><div class="menu-card-body"><div class="menu-card-name">Sándwich Artesanal</div><div class="menu-card-desc">Pan artesanal, proteína a elegir y vegetales frescos. El compañero ideal.</div><div class="menu-card-price">$65 MXN</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── FEATURES ─── -->
+<section id="ambiente">
+  <div class="section-header reveal">
+    <span class="section-label">Más que café</span>
+    <h2>¿Por Qué CoffeeBlast?</h2>
+    <p>Nos diferenciamos por la calidad, el sabor y la energía que ponemos en cada bebida.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon">☕</div>
+      <h3>Café de Especialidad</h3>
+      <p>Trabajamos con granos seleccionados y técnicas precisas para garantizar la mejor taza en cada visita.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:0.12s">
+      <div class="feat-icon">⚡</div>
+      <h3>Servicio Express</h3>
+      <p>¿Vienes de paso por la carretera? Tu bebida lista en minutos, perfecta para llevar y seguir tu camino.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:0.24s">
+      <div class="feat-icon">🌊</div>
+      <h3>Vibra Puerto Vallarta</h3>
+      <p>En Las Juntas, somos el stop perfecto antes o después de la playa. Fresco, cómodo y con buena energía.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── UBICACIÓN ─── -->
+<section id="ubicacion">
+  <div class="location-inner">
+    <div class="location-map reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3730.65!2d-105.2450!3d20.7050!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDQyJzE4LjAiTiAxMDXCsDE0JzQyLjAiVw!5e0!3m2!1ses!2smx!4v1680000000000!5m2!1ses!2smx"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="CoffeeBlast Puerto Vallarta">
+      </iframe>
+    </div>
+    <div class="location-info reveal" style="transition-delay:0.15s">
+      <span class="section-label">Encuéntranos</span>
+      <h2>Visítanos en Puerto Vallarta</h2>
+      <div class="info-block">
+        <div class="info-icon">📍</div>
+        <div>
+          <h4>Dirección</h4>
+          <p>Carretera Tepic–Puerto Vallarta 5800<br>Las Juntas, junto a Gasolinera Valero<br>Puerto Vallarta, Jalisco, México</p>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-icon">🕐</div>
+        <div>
+          <h4>Horarios</h4>
+          <div class="hours-grid">
+            <span class="day">Lun – Vie</span><span class="open">7:00 AM – 9:00 PM</span>
+            <span class="day">Sábado</span><span class="open">7:00 AM – 9:00 PM</span>
+            <span class="day">Domingo</span><span class="open">8:00 AM – 7:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-icon">📱</div>
+        <div>
+          <h4>Síguenos</h4>
+          <p><a href="https://www.facebook.com/p/Coffee-BLAST-61550916636712/" target="_blank" style="color:var(--green);text-decoration:none;">Facebook: Coffee BLAST ↗</a></p>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-icon">💳</div>
+        <div>
+          <h4>Métodos de Pago</h4>
+          <p>Efectivo · Tarjeta · Transferencia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-brand">
+    <svg width="38" height="43" viewBox="0 0 100 110">
+      <circle cx="50" cy="44" r="38" fill="#72C11A"/>
+      <polygon points="38,76 50,100 62,76" fill="#72C11A"/>
+      <circle cx="50" cy="44" r="24" fill="#0a1205"/>
+    </svg>
+    <span class="footer-brand-text">COFFEE<span>BLAST</span></span>
+  </div>
+  <p class="footer-tagline">"Donde cada sorbo es una explosión de sabor"</p>
+  <div class="social-links">
+    <a class="social-btn" href="https://www.facebook.com/p/Coffee-BLAST-61550916636712/" target="_blank">f</a>
+    <a class="social-btn" href="#">ig</a>
+    <a class="social-btn" href="#">wa</a>
+  </div>
+  <p class="footer-copy">© 2025 CoffeeBlast Puerto Vallarta · Todos los derechos reservados</p>
+</footer>
+
+<script>
+  // Navbar
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Menu filter
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(c =>
+      c.style.display = (cat === 'todos' || c.dataset.cat === cat) ? 'block' : 'none'
+    );
+  }
+</script>
+</body>
+</html>
