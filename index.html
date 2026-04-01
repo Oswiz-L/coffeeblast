@@ -501,7 +501,9 @@
     <button class="tab-btn" onclick="filterMenu('caliente',this)">Calientes ☕</button>
     <button class="tab-btn" onclick="filterMenu('frio',this)">Fríos 🧊</button>
     <button class="tab-btn" onclick="filterMenu('frap',this)">Frappés 🥤</button>
-    <button class="tab-btn" onclick="filterMenu('food',this)">Snacks 🥐</button>
+    <button class="tab-btn" onclick="filterMenu('baguettes',this)">Baguettes 🥖</button>
+    <button class="tab-btn" onclick="filterMenu('croissant', this)">Croissants 🥐</button>
+    <button class="tab-btn" onclick="filterMenu('food',this)">Snacks 🍰</button>
   </div>
   <div class="menu-grid" id="menuGrid">
     <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot">☕</div><div class="menu-card-body"><div class="menu-card-name">Americano BLAST</div><div class="menu-card-desc">Doble shot de espresso con agua caliente. Intenso y lleno de energía.</div><div class="menu-card-price">$45 MXN</div></div></div>
@@ -511,11 +513,16 @@
     <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">☕</div><div class="menu-card-body"><div class="menu-card-name">Iced Latte Caramelo</div><div class="menu-card-desc">Espresso frío con leche y salsa de caramelo artesanal sobre hielo.</div><div class="menu-card-price">$65 MXN</div></div></div>
     <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">🥛</div><div class="menu-card-body"><div class="menu-card-name">Iced Matcha Latte</div><div class="menu-card-desc">Matcha ceremonial con leche de avena y hielo fresco.</div><div class="menu-card-price">$70 MXN</div></div></div>
     <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🥤</div><div class="menu-card-body"><div class="menu-card-name">Frappé BLAST Original</div><div class="menu-card-desc">Nuestro frappé signature: café, chocolate, crema y un blast de caramelo.</div><div class="menu-card-price">$75 MXN <span class="tag">🔥 Firma</span></div></div></div>
-    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🍓</div><div class="menu-card-body"><div class="menu-card-name">Frappé de Fresa</div><div class="menu-card-desc">Fresas frescas, crema y toque de vainilla. Intensamente frutal.</div><div class="menu-card-price">$70 MXN</div></div></div>
+    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">☕🧊</div><div class="menu-card-body"><div class="menu-card-name">Frappuchino</div><div class="menu-card-desc">Shots de espresso, crema y toque de vainilla.</div><div class="menu-card-price">$70 MXN</div></div></div>
     <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap">🍪</div><div class="menu-card-body"><div class="menu-card-name">Frappé Cookies & Cream</div><div class="menu-card-desc">Crema, galleta Oreo triturada y café. El favorito de todos.</div><div class="menu-card-price">$75 MXN <span class="tag">⭐ Popular</span></div></div></div>
-    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón y Queso</div><div class="menu-card-desc">Croissant horneado al momento, relleno de jamón y queso gratinado.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🧁</div><div class="menu-card-body"><div class="menu-card-name">Muffin del Día</div><div class="menu-card-desc">Horneado fresco cada mañana. Sabores: arándano, chocolate o limón.</div><div class="menu-card-price">$40 MXN</div></div></div>
-    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🥪</div><div class="menu-card-body"><div class="menu-card-name">Sándwich Artesanal</div><div class="menu-card-desc">Pan artesanal, proteína a elegir y vegetales frescos. El compañero ideal.</div><div class="menu-card-price">$65 MXN</div></div></div>
+    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón y Queso</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jamón y queso gratinado.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón Ahumando y Queso</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jamón ahumado, queso gratinado y salsa especial de la casa.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Nutella</div><div class="menu-card-desc">Croissant a la parrilla, relleno de nutella.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jalea</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jalea de fresa.</div><div class="menu-card-price">$55 MXN</div></div></div>
+    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette">🥖🍖</div><div class="menu-card-body"><div class="menu-card-name"> Baguette Carnes Frías</div><div class="menu-card-desc">Baguette pequeña a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div><div class="menu-card-price">$35 MXN <span class="tag">🔥 Más vendido</span></div></div></div>
+    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette">🥖🧀</div><div class="menu-card-body"><div class="menu-card-name"> Baguette Requesón</div><div class="menu-card-desc">Baguette pequeña a la parrilla, huntada con mantequilla, rellena de requesón y aderezado con miel.</div><div class="menu-card-price">$35 MXN</div></div></div>
+    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette">🥖🍖 </div><div class="menu-card-body"><div class="menu-card-name"> Romano</div><div class="menu-card-desc">Baguette grande a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div><div class="menu-card-price">$35 MXN</div></div></div>
+    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🍘</div><div class="menu-card-body"><div class="menu-card-name">Galletas Arteseanales Turcas</div><div class="menu-card-desc">Galletas de nuez, elaboardas y horneadas artesanalmente.</div><div class="menu-card-price">$40 MXN</div></div></div>
   </div>
 </section>
 
@@ -535,7 +542,7 @@
       <p>Trabajamos con granos seleccionados y técnicas precisas para garantizar la mejor taza en cada visita.</p>
     </div>
     <div class="feat-card reveal" style="transition-delay:0.12s">
-      <div class="feat-icon">🏃‍♂️‍➡️</div>
+      <div class="feat-icon">⚡</div>
       <h3>Servicio Express</h3>
       <p>¿Vienes de paso por la carretera? Tu bebida lista en minutos, perfecta para llevar y seguir tu camino.</p>
     </div>
