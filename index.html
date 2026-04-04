@@ -8,10 +8,10 @@
   <style>
     :root {
       --green:      #72C11A;
-      --green-dark: #79c522;
+      --green-dark: #5a9a13;
       --green-glow: rgba(114,193,26,0.22);
       --green-soft: rgba(114,193,26,0.09);
-      --bg:         #2a3322;
+      --bg:         #111a09;
       --bg-mid:     #151f0b;
       --bg-card:    #1b260d;
       --bg-card2:   #1e2a0f;
@@ -73,8 +73,7 @@
       background: radial-gradient(ellipse at 55% 35%, #1d330a 0%, #111a09 55%, #0a1205 100%);
     }
     #hero::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background-image:
         linear-gradient(rgba(114,193,26,0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(114,193,26,0.035) 1px, transparent 1px);
@@ -82,8 +81,7 @@
       pointer-events: none;
     }
     .hero-glow {
-      position: absolute;
-      width: 640px; height: 640px;
+      position: absolute; width: 640px; height: 640px;
       background: radial-gradient(circle, rgba(114,193,26,0.1) 0%, transparent 70%);
       top: 50%; left: 50%; transform: translate(-50%, -55%);
       pointer-events: none;
@@ -116,8 +114,7 @@
     }
     .hero-title .blast { color: var(--green); display: block; }
     .hero-sub {
-      position: relative; z-index:1;
-      margin-top: 1.6rem;
+      position: relative; z-index:1; margin-top: 1.6rem;
       font-family: 'Playfair Display', serif; font-style: italic;
       font-size: 1.15rem; color: var(--muted);
       animation: fadeUp 0.9s 0.4s both;
@@ -137,15 +134,9 @@
       background: var(--green); color: var(--bg);
       box-shadow: 0 4px 24px rgba(114,193,26,0.35);
     }
-    .btn-primary:hover {
-      transform: translateY(-2px); background: #82d620;
-      box-shadow: 0 8px 36px rgba(114,193,26,0.5);
-    }
-    .btn-outline {
-      border: 1px solid rgba(238,245,224,0.3); color: var(--off-white);
-    }
+    .btn-primary:hover { transform: translateY(-2px); background: #82d620; box-shadow: 0 8px 36px rgba(114,193,26,0.5); }
+    .btn-outline { border: 1px solid rgba(238,245,224,0.3); color: var(--off-white); }
     .btn-outline:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
-
     .hero-scroll {
       position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index:1;
       display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -224,21 +215,40 @@
     .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--green); line-height:1; }
     .stat-label { font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-top:0.3rem; }
 
-    /* ─── MENÚ ─── */
+    /* ══════════════════════════════════════
+       ─── MENÚ ───
+    ══════════════════════════════════════ */
     #menu { padding: 8rem 3rem; background: var(--bg); }
+
+    /* Tab bar */
     .menu-tabs {
       display: flex; justify-content: center; gap: 0.5rem;
       margin-bottom: 3rem; flex-wrap: wrap;
     }
     .tab-btn {
-      padding: 0.55rem 1.5rem; border: 1px solid var(--border);
+      padding: 0.55rem 1.4rem; border: 1px solid var(--border);
       background: transparent; color: var(--muted);
-      font-family: 'Outfit',sans-serif; font-size: 0.78rem; letter-spacing: 0.12em;
-      text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s;
+      font-family: 'Outfit',sans-serif; font-size: 0.78rem; letter-spacing: 0.1em;
+      text-transform: uppercase; cursor: pointer; border-radius: 3px;
+      transition: all 0.2s; white-space: nowrap;
     }
     .tab-btn.active, .tab-btn:hover {
       background: var(--green); color: var(--bg); border-color: var(--green); font-weight: 700;
     }
+
+    /* ── PANEL wrapper ── */
+    .menu-panel {
+      /* Hidden by default */
+      display: none;
+      animation: panelIn 0.35s ease both;
+    }
+    .menu-panel.active { display: block; }
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Populares: card grid ── */
     .menu-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       gap: 1.4rem; max-width: 1100px; margin: 0 auto;
@@ -254,27 +264,48 @@
       border-color: rgba(114,193,26,0.4);
     }
     .menu-card-img {
-      height: 180px; display: flex; align-items: center; justify-content: center;
-      font-size: 4rem; position: relative; overflow: hidden;
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+      background: var(--bg-card2);
     }
-    .menu-card-img::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 50%, var(--bg-card) 100%);
+    .menu-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
     }
+    .menu-card:hover .menu-card-img img { transform: scale(1.04); }
+    /* fallback emoji bg */
     .cat-hot  { background: linear-gradient(135deg,#1e2f0a,#111a09); }
     .cat-cold { background: linear-gradient(135deg,#0a1a1a,#080d12); }
     .cat-frap { background: linear-gradient(135deg,#1a270a,#101807); }
     .cat-food { background: linear-gradient(135deg,#1f200a,#131407); }
+    .cat-pop  { background: var(--bg-card2); }
 
-    .menu-card-body { padding: 1.2rem 1.4rem 1.6rem; }
+    .menu-card-body { padding: 1.1rem 1.4rem 1.5rem; }
     .menu-card-name { font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; }
-    .menu-card-desc { font-size: 0.82rem; line-height: 1.65; color: var(--muted); margin-bottom: 1rem; }
+    .menu-card-desc { font-size: 0.82rem; line-height: 1.65; color: var(--muted); margin-bottom: 0.9rem; }
     .menu-card-price { font-family:'Bebas Neue',sans-serif; font-size:1.35rem; color:var(--green); letter-spacing:0.04em; }
     .tag {
       display: inline-block; padding: 0.18rem 0.55rem;
       background: rgba(114,193,26,0.13); color: var(--green);
       font-family: 'Outfit',sans-serif; font-size: 0.65rem; letter-spacing: 0.1em;
       text-transform: uppercase; border-radius: 2px; margin-left: 0.4rem; vertical-align: middle;
+    }
+
+    /* ── Image panels ── */
+    .menu-img-panel {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    }
+    .menu-img-panel img {
+      width: 100%; max-width: 860px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      display: block;
+    }
+    .menu-img-caption {
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); text-align: center;
     }
 
     /* ─── FEATURES ─── */
@@ -318,9 +349,9 @@
       display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
     }
     .info-block h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 0.35rem; font-weight: 600; }
-    .info-block p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+    .info-block p  { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
     .hours-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1.2rem; font-size: 0.88rem; color: var(--muted); }
-    .hours-grid .day { font-weight: 500; color: var(--off-white); }
+    .hours-grid .day  { font-weight: 500; color: var(--off-white); }
     .hours-grid .open { color: var(--green); }
 
     /* ─── FOOTER ─── */
@@ -356,6 +387,8 @@
     }
     @media (max-width: 600px) {
       .nav-links { display:none; }
+      .menu-tabs { gap: 0.4rem; }
+      .tab-btn { font-size: 0.7rem; padding: 0.45rem 0.9rem; }
     }
   </style>
 </head>
@@ -383,7 +416,6 @@
 <section id="hero">
   <div class="hero-glow"></div>
   <p class="hero-eyebrow">Puerto Vallarta · México</p>
-
   <div class="hero-logo-big">
     <svg width="110" height="122" viewBox="0 0 100 110" fill="none">
       <circle cx="50" cy="44" r="38" fill="rgba(114,193,26,0.12)"/>
@@ -393,7 +425,6 @@
       <circle cx="50" cy="44" r="8" fill="#72C11A" opacity="0.8"/>
     </svg>
   </div>
-
   <h1 class="hero-title">COFFEE<span class="blast">BLAST</span></h1>
   <p class="hero-sub">Donde cada sorbo es una explosión de sabor</p>
   <div class="hero-cta">
@@ -411,11 +442,9 @@
 <!-- ─── NOSOTROS ─── -->
 <section style="background:var(--bg-mid)">
 <div id="nosotros">
-
   <div class="reveal" style="position:relative">
     <div class="cup-frame">
       <svg width="200" height="220" viewBox="0 0 200 220" fill="none">
-        <!-- Steam -->
         <path d="M68 38 Q77 22 68 8" stroke="#72C11A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7">
           <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2s" repeatCount="indefinite"/>
           <animateTransform attributeName="transform" type="translate" values="0,5;0,-7;0,5" dur="2s" repeatCount="indefinite"/>
@@ -428,25 +457,18 @@
           <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.9s" repeatCount="indefinite"/>
           <animateTransform attributeName="transform" type="translate" values="0,5;0,-6;0,5" dur="1.9s" repeatCount="indefinite"/>
         </path>
-        <!-- Cup body -->
         <path d="M30 55 L48 185 H152 L170 55 Z" fill="#1b260d"/>
         <path d="M30 55 L48 185 H152 L170 55 Z" fill="url(#gCup)" opacity="0.5"/>
-        <!-- Rim -->
         <ellipse cx="100" cy="55" rx="70" ry="13" fill="#1e2a0f"/>
         <ellipse cx="100" cy="53" rx="70" ry="13" fill="#243312"/>
-        <!-- Coffee surface -->
         <ellipse cx="100" cy="52" rx="54" ry="8" fill="#162009"/>
-        <!-- Logo art on surface -->
         <circle cx="100" cy="52" r="17" fill="none" stroke="#72C11A" stroke-width="1.5" opacity="0.45"/>
         <circle cx="100" cy="52" r="7"  fill="#72C11A" opacity="0.35"/>
         <polygon points="94,63 100,73 106,63" fill="#72C11A" opacity="0.35"/>
-        <!-- Saucer -->
         <ellipse cx="100" cy="185" rx="82" ry="13" fill="#1e2a0f"/>
         <ellipse cx="100" cy="183" rx="74" ry="10" fill="#243312"/>
-        <!-- Handle -->
         <path d="M170 88 Q210 112 205 152 Q200 178 170 166" stroke="#1e2a0f" stroke-width="16" fill="none" stroke-linecap="round"/>
         <path d="M170 88 Q207 114 202 152 Q197 176 170 166" stroke="#243312" stroke-width="9" fill="none" stroke-linecap="round"/>
-        <!-- Brand text on cup -->
         <text x="100" y="130" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#72C11A" opacity="0.18" letter-spacing="3">COFFEE</text>
         <text x="100" y="155" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#72C11A" opacity="0.18" letter-spacing="3">BLAST</text>
         <defs>
@@ -463,25 +485,15 @@
       </div>
     </div>
   </div>
-
   <div class="about-text reveal" style="transition-delay:0.15s">
     <span class="section-label">Nuestra Historia</span>
     <h2>Una Explosión de Sabor en Puerto Vallarta</h2>
     <p>CoffeeBlast nació con una misión simple: ofrecer bebidas de café de calidad extraordinaria en un espacio lleno de energía y buena vibra en el corazón de Puerto Vallarta.</p>
     <p>Ubicados sobre la Carretera Tepic–Puerto Vallarta en Las Juntas, somos el punto perfecto para detenerte y recargar energías con nuestras bebidas calientes, frías y frappés artesanales.</p>
     <div class="stats-row">
-      <div>
-        <div class="stat-num">20+</div>
-        <div class="stat-label">Bebidas en Menú</div>
-      </div>
-      <div>
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Café de Calidad</div>
-      </div>
-      <div>
-        <div class="stat-num">7 días</div>
-        <div class="stat-label">A la Semana</div>
-      </div>
+      <div><div class="stat-num">20+</div><div class="stat-label">Bebidas en Menú</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Café de Calidad</div></div>
+      <div><div class="stat-num">7 días</div><div class="stat-label">A la Semana</div></div>
     </div>
   </div>
 </div>
@@ -489,43 +501,204 @@
 
 <div class="divider"></div>
 
-<!-- ─── MENÚ ─── -->
+<!-- ══════════════════════════════════════
+     ─── MENÚ ───
+══════════════════════════════════════ -->
 <section id="menu">
   <div class="section-header reveal">
     <span class="section-label">Lo que Ofrecemos</span>
     <h2>Nuestro Menú</h2>
     <p>Desde clásicos espressos hasta frappés creativos. Siempre elaborados al momento para ti.</p>
   </div>
-  <div class="menu-tabs">
-    <button class="tab-btn active" onclick="filterMenu('todos',this)">Todos</button>
-    <button class="tab-btn" onclick="filterMenu('caliente',this)">Calientes ☕</button> 
-    <button class="tab-btn" onclick="filterMenu('frio',this)">Fríos 🧊</button>
-    <button class="tab-btn" onclick="filterMenu('frap',this)">Frappés 🥤</button>
-    <button class="tab-btn" onclick="filterMenu('baguettes',this)">Baguettes 🥖</button>
-    <button class="tab-btn" onclick="filterMenu('croissant', this)">Croissants 🥐</button>
-    <button class="tab-btn" onclick="filterMenu('food',this)">Snacks 🍰</button>
+
+  <!-- Tab buttons -->
+  <div class="menu-tabs" role="tablist">
+    <button class="tab-btn active" onclick="showPanel('populares', this)" role="tab">Populares</button>
+    <button class="tab-btn" onclick="showPanel('calientes', this)" role="tab">Bebidas Calientes</button>
+    <button class="tab-btn" onclick="showPanel('frios', this)" role="tab">Bebidas Frías</button>
+    <button class="tab-btn" onclick="showPanel('frapes', this)" role="tab">Frappés</button>
+    <button class="tab-btn" onclick="showPanel('croissants', this)" role="tab">Croissants</button>
+    <button class="tab-btn" onclick="showPanel('baguettes-chicos', this)" role="tab">Baguettes Chicos</button>
+    <button class="tab-btn" onclick="showPanel('baguettes-grandes', this)" role="tab">Baguettes Grandes</button>
   </div>
-  <div class="menu-grid" id="menuGrid">
-    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot"><img src="photos/americano" alt="☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Americano</div><div class="menu-card-desc">Doble shot de espresso con agua caliente. Intenso y lleno de energía.</div><div class="menu-card-price">$45 MXN</div></div></div>
-    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot"><img src="photos/capuchino.jpeg" alt="☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Capuchino</div><div class="menu-card-desc">Espresso, leche vaporizada y una capa perfecta de espuma cremosa.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot"><img src="photos/latte" alt="☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Latte</div><div class="menu-card-desc">Espresso suave con leche de vainilla artesanal. Dulce y reconfortante.</div><div class="menu-card-price">$60 MXN <span class="tag">⭐ Popular</span></div></div></div>
-    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot"><img src="photos/mocha.jpeg" alt="☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Mocha</div><div class="menu-card-desc">Espresso con chocolate, leche caliente y aderezo de chocolate.</div><div class="menu-card-price">$45 MXN</div></div></div>
-    <div class="menu-card" data-cat="caliente"><div class="menu-card-img cat-hot"><img src="photos/espresso" alt="☕" width="150"></div><div class="meody"><div class="menu-card-name">Espresso</div><div class="menu-card-desc">Shot de espresso.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold">🧊</div><div class="menu-card-body"><div class="menu-card-name">Iced Americano</div><div class="menu-card-desc">Café Americano con hielos.</div><div class="menu-card-price">$65 MXN <span class="tag">⭐ Popular</span></div></div></div>
-    <div class="menu-card" data-cat="frio"><div class="menu-card-img cat-cold"><img src="photos/iced latte.jpeg" alt="🧊☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Iced Latte</div><div class="menu-card-desc">Espresso caliente con leche y hielos.</div><div class="menu-card-price">$65 MXN</div></div></div>
-    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-cold"><img src="photos/frappuchino.jpeg" alt="🧊☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Frappuchino</div><div class="menu-card-desc">Espresso con leche, crema batida y aderezo de chocolate.</div><div class="menu-card-price">$70 MXN</div></div></div>
-    <div class="menu-card" data-cat="frap"><div class="menu-card-img cat-frap"><img src="photos/frappé mocha.jpeg" alt="🧊☕" width="150"></div><div class="menu-card-body"><div class="menu-card-name">Frappé Mocha</div><div class="menu-card-desc">Espresso con leche, chocolate, crema batida y aderezo de chocolate.</div><div class="menu-card-price">$75 MXN <span class="tag">🔥 Firma</span></div></div></div>
-    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant"><img src="photos/croissant jamón salami queso.jpeg" alt="🥐" width="250"></div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón y Queso</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jamón, salami y queso gratinado.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant"><img src="photos/croissant ahumado.jpeg" alt="🥐" width="250"></div><div class="menu-card-body"><div class="menu-card-name">Croissant Jamón Ahumando y Queso</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jamón ahumado, queso gratinado y salsa especial de la casa.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Nutella</div><div class="menu-card-desc">Croissant a la parrilla, relleno de nutella.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="croissant"><div class="menu-card-img cat-croisssant">🥐</div><div class="menu-card-body"><div class="menu-card-name">Croissant Jalea</div><div class="menu-card-desc">Croissant a la parrilla huntado con mantequilla, relleno de jalea de fresa.</div><div class="menu-card-price">$55 MXN</div></div></div>
-    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette"><img src="photos/baguette carnes frías.jpeg" alt="🥖🧀🍖" width="250"></div><div class="menu-card-body"><div class="menu-card-name"> Baguette Carnes Frías</div><div class="menu-card-desc">Baguette pequeña a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div><div class="menu-card-price">$35 MXN <span class="tag">🔥 Más vendido</span></div></div></div>
-    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette">🥖🧀</div><div class="menu-card-body"><div class="menu-card-name"> Baguette Requesón</div><div class="menu-card-desc">Baguette pequeña a la parrilla, huntada con mantequilla, rellena de requesón y aderezado con miel.</div><div class="menu-card-price">$35 MXN</div></div></div>
-    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette"><img src="photos/baguette romano.jpeg" alt="🥖🍖🧀" width="250"> </div><div class="menu-card-body"><div class="menu-card-name"> Baguette Romano</div><div class="menu-card-desc">Baguette grande a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div><div class="menu-card-price">$35 MXN</div></div></div>
-    <div class="menu-card" data-cat="baguettes"><div class="menu-card-img cat-baguette"><img src="photos/baguette ahumado.jpeg" alt="🥖🍖" width="250"> </div><div class="menu-card-body"><div class="menu-card-name"> Baguette Ahumado</div><div class="menu-card-desc">Baguette grande a la parrilla, acompañada con jamón ahumado, queso y la salsa especial de la casa.</div><div class="menu-card-price">$35 MXN</div></div></div>
-    <div class="menu-card" data-cat="food"><div class="menu-card-img cat-food">🍘</div><div class="menu-card-body"><div class="menu-card-name">Galletas Arteseanales Turcas</div><div class="menu-card-desc">Galletas de nuez, elaboardas y horneadas artesanalmente.</div><div class="menu-card-price">$40 MXN</div></div></div>
+
+  <!-- ── PANEL: Populares (cards) ── -->
+  <div class="menu-panel active" id="panel-populares" role="tabpanel">
+    <div class="menu-grid">
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/capuchino.jpeg" alt="Capuchino"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Capuchino</div>
+          <div class="menu-card-desc">Espresso, leche vaporizada y una capa perfecta de espuma cremosa.</div>
+          <div class="menu-card-price">$55 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/mocha.jpeg" alt="Mocha"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Mocha</div>
+          <div class="menu-card-desc">Espresso con chocolate, leche caliente y aderezo de chocolate.</div>
+          <div class="menu-card-price">$65 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/iced latte.jpeg" alt="Iced Latte"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Iced Latte</div>
+          <div class="menu-card-desc">Espresso caliente con leche y hielos.</div>
+          <div class="menu-card-price">$65 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/frappuchino.jpeg" alt="Frappuchino"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Frappuchino</div>
+          <div class="menu-card-desc">Espresso con leche, crema batida y aderezo de chocolate.</div>
+          <div class="menu-card-price">$80 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/frappé mocha.jpeg" alt="Frappé Mocha"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Frappé Mocha</div>
+          <div class="menu-card-desc">Espresso con leche, chocolate, crema batida y aderezo de chocolate.</div>
+          <div class="menu-card-price">$85 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/croissant jamón salami queso.jpeg" alt="Croissant Jamón y Queso"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Croissant Jamón y Queso</div>
+          <div class="menu-card-desc">Croissant a la parrilla untado con mantequilla, relleno de jamón, salami y queso gratinado.</div>
+          <div class="menu-card-price">$65 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/croissant ahumado.jpeg" alt="Croissant Jamón Ahumado"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Croissant Jamón Ahumado y Queso</div>
+          <div class="menu-card-desc">Croissant a la parrilla untado con mantequilla, relleno de jamón ahumado, queso gratinado y salsa especial de la casa.</div>
+          <div class="menu-card-price">$65 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/baguette carnes frías.jpeg" alt="Baguette Carnes Frías"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Baguette Carnes Frías</div>
+          <div class="menu-card-desc">Baguette pequeña a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div>
+          <div class="menu-card-price">$58 MXN <span class="tag">🔥 Más vendido</span></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/baguette romano.jpeg" alt="Baguette Romano"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Baguette Romano</div>
+          <div class="menu-card-desc">Baguette grande a la parrilla, acompañada con salami, pepperoni, queso y salsa especial de la casa.</div>
+          <div class="menu-card-price">$96 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/baguette ahumado.jpeg" alt="Baguette Ahumado"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Baguette Ahumado</div>
+          <div class="menu-card-desc">Baguette grande a la parrilla, acompañada con jamón ahumado, queso y salsa especial de la casa.</div>
+          <div class="menu-card-price">$98 MXN</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-img cat-pop">
+          <img src="photos/galletas turcas.jpeg" alt="Galletas Artesanales Turcas"/>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Galletas Artesanales Turcas</div>
+          <div class="menu-card-desc">Galletas de nuez, elaboradas y horneadas artesanalmente.</div>
+          <div class="menu-card-price">$40 MXN</div>
+        </div>
+      </div>
+
+    </div><!-- /.menu-grid -->
+  </div><!-- /#panel-populares -->
+
+  <!-- ── PANEL: Bebidas Calientes (imagen) ── -->
+  <div class="menu-panel" id="panel-calientes" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu calientes.jpeg" alt="Menú Bebidas Calientes"/>
+      <p class="menu-img-caption">Menú de Bebidas Calientes</p>
+    </div>
   </div>
-</section>
+
+  <!-- ── PANEL: Bebidas Frías (imagen) ── -->
+  <div class="menu-panel" id="panel-frios" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu frios.jpeg" alt="Menú Bebidas Frías"/>
+      <p class="menu-img-caption">Menú de Bebidas Frías</p>
+    </div>
+  </div>
+
+  <!-- ── PANEL: Frappés (imagen) ── -->
+  <div class="menu-panel" id="panel-frapes" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu frapes.jpeg" alt="Menú Frappés"/>
+      <p class="menu-img-caption">Menú de Frappés</p>
+    </div>
+  </div>
+
+  <!-- ── PANEL: Croissants (imagen) ── -->
+  <div class="menu-panel" id="panel-croissants" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu croissants.jpeg" alt="Menú Croissants"/>
+      <p class="menu-img-caption">Menú de Croissants</p>
+    </div>
+  </div>
+
+  <!-- ── PANEL: Baguettes Chicos (imagen) ── -->
+  <div class="menu-panel" id="panel-baguettes-chicos" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu baguettes chicos.jpeg" alt="Menú Baguettes Chicos"/>
+      <p class="menu-img-caption">Menú de Baguettes Chicos</p>
+    </div>
+  </div>
+
+  <!-- ── PANEL: Baguettes Grandes (imagen) ── -->
+  <div class="menu-panel" id="panel-baguettes-grandes" role="tabpanel">
+    <div class="menu-img-panel">
+      <img src="photos/menu baguettes grandes.jpeg" alt="Menú Baguettes Grandes"/>
+      <p class="menu-img-caption">Menú de Baguettes Grandes</p>
+    </div>
+  </div>
+
+</section><!-- /#menu -->
 
 <div class="divider"></div>
 
@@ -626,24 +799,28 @@
 </footer>
 
 <script>
-  // Navbar
+  // ── Navbar scroll ──
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 
-  // Scroll reveal
+  // ── Scroll reveal ──
   const obs = new IntersectionObserver(
     entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
     { threshold: 0.1 }
   );
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // Menu filter
-  function filterMenu(cat, btn) {
+  // ── Tab panel switcher ──
+  function showPanel(id, btn) {
+    // Deactivate all tabs
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // Hide all panels
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+
+    // Activate clicked tab
     btn.classList.add('active');
-    document.querySelectorAll('.menu-card').forEach(c =>
-      c.style.display = (cat === 'todos' || c.dataset.cat === cat) ? 'block' : 'none'
-    );
+    // Show target panel
+    document.getElementById('panel-' + id).classList.add('active');
   }
 </script>
 </body>
